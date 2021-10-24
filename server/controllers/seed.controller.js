@@ -7,7 +7,7 @@ module.exports.checkDB = async (req, res, next) => {
   try {
     const location = await Location.find();
     let modifiedLocation;
-    if (location) {
+    if (location.length === 0) {
       Location.create(dataBackend)
         .then((newLocation) => {
           measuresData.forEach((measure) => {
@@ -35,8 +35,9 @@ module.exports.checkDB = async (req, res, next) => {
         .catch((err) => {
           console.log(err);
         });
+      return res.status(200).json(modifiedLocation);
     }
-    return res.status(200).json(modifiedLocation);
+    return res.status(200).json(location);
   } catch {
     return res.status(500).json(err);
   }
