@@ -94,8 +94,8 @@ function HomePage() {
                   <tr>
                     <td>{measure.Month}</td>
                     <td>{measure.alpha}</td>
-                    <td>{measure.mean_vel110}</td>
-                    <td>{measure.mean_vel89}</td>
+                    <td>{measure["Mean vel110 (m/s)"]}</td>
+                    <td>{measure["Mean vel110 (m/s)"]}</td>
                   </tr>
                 );
               })}
