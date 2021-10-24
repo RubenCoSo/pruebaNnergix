@@ -10,7 +10,7 @@ const locationSchema = new Schema(
     created_by: String,
     lat: Number,
     lng: Number,
-    monthly_mesures: [{ type: Schema.Types.ObjectId, ref: "Measure" }],
+    monthly_measures: [{ type: Schema.Types.ObjectId, ref: "Measure" }],
   },
   {
     timestamps: true,

@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const mesureSchema = new Schema(
+const measureSchema = new Schema(
   {
     Month: {
       type: String,
@@ -15,6 +15,6 @@ const mesureSchema = new Schema(
   }
 );
 
-const Mesure = model("Mesure", MesureSchema);
+const Measure = model("Measure", measureSchema);
 
-module.exports = Mesure;
+module.exports = Measure;
