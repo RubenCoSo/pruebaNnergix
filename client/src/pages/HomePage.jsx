@@ -10,6 +10,10 @@ function HomePage() {
   const [isDB, setIsDB] = useState(false);
   const [measures, setMeasures] = useState();
   const [measureId, setMeasureId] = useState();
+  const [yearMonth, setYearMonth] = useState();
+  const [meanVel110, setMeanVel110] = useState();
+  const [meanVel89, setMeanVel89] = useState();
+  const [alpha, setAlpha] = useState();
 
   console.log(`beforeCall`, isDB);
 
@@ -46,6 +50,19 @@ function HomePage() {
     } else {
       setMeasures();
     }
+  };
+
+  const handleSubmit = () => {
+    const requestBody = { measureId, yearMonth, meanVel110, meanVel89, alpha };
+
+    axios
+      .put(`${API_URL}/data/measureUpdate/`, requestBody)
+      .then((modMeasure) => {
+        console.log(modMeasure);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return isDB ? (
@@ -92,19 +109,49 @@ function HomePage() {
             </tbody>
           </table>
           <LineChart measures={measures} />
-          <form>
-            <select onChange={handleSelectMod}>
+          <br />
+          <h1>Update Measure</h1>
+          <form onSubmit={handleSubmit}>
+            <select onChange={(e) => setMeasureId(e.target.value)}>
               <option value="0">Choose...</option>
-              {locationOpt
-                ? locationOpt.map((loc) => {
-                    return (
-                      <option key={loc} value={loc}>
-                        {loc}
-                      </option>
-                    );
-                  })
-                : null}
+              {measures.map((measure) => {
+                return (
+                  <option key={measure._id} value={measure._id}>
+                    {measure.Month}
+                  </option>
+                );
+              })}
             </select>
+            <br />
+            <label>Year/Month </label>
+            <input
+              type="text"
+              id="Year/Month"
+              onChange={(e) => setYearMonth(e.target.value)}
+            />
+            <br />
+            <label>Mean Vel 110 (m/s) </label>
+            <input
+              type="float"
+              id="Mean Vel 110 (m/s)"
+              onChange={(e) => setMeanVel110(e.target.value)}
+            />
+            <br />
+            <label>Mean Vel 89 (m/s) </label>
+            <input
+              type="float"
+              id="Mean Vel 89 (m/s)"
+              onChange={(e) => setMeanVel89(e.target.value)}
+            />
+            <br />
+            <label>Alpha </label>
+            <input
+              type="float"
+              id="Alpha"
+              onChange={(e) => setAlpha(e.target.value)}
+            />
+            <br />
+            <button type="submit">Update</button>
           </form>
         </>
       ) : null}
