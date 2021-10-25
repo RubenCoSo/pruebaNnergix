@@ -1,7 +1,7 @@
-import logo from "../logo.svg";
 import "../App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import LineChart from "../components/Loading/LineChart";
 const API_URL = "http://localhost:5005/api";
 
 function HomePage() {
@@ -9,6 +9,7 @@ function HomePage() {
   const [locationOpt, setLocationOpt] = useState();
   const [isDB, setIsDB] = useState(false);
   const [measures, setMeasures] = useState();
+  const [measureId, setMeasureId] = useState();
 
   console.log(`beforeCall`, isDB);
 
@@ -46,17 +47,6 @@ function HomePage() {
       setMeasures();
     }
   };
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`${API_URL}/data/allMeasures/${location}`)
-  //     .then((measures) => {
-  //       console.log(measures.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [location]);
 
   return isDB ? (
     <>
@@ -101,6 +91,21 @@ function HomePage() {
               })}
             </tbody>
           </table>
+          <LineChart measures={measures} />
+          <form>
+            <select onChange={handleSelectMod}>
+              <option value="0">Choose...</option>
+              {locationOpt
+                ? locationOpt.map((loc) => {
+                    return (
+                      <option key={loc} value={loc}>
+                        {loc}
+                      </option>
+                    );
+                  })
+                : null}
+            </select>
+          </form>
         </>
       ) : null}
     </>
